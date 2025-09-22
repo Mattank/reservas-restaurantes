@@ -15,7 +15,7 @@ class RestaurantController extends Controller
     public function index(Request $request)
     {
         try {
-             $apiKey = $request->header('API-KEY');
+            $apiKey = $request->header('API-KEY');
             if ($resp = ApiKeyController::check($apiKey)) {
                 return $resp;
             }
@@ -95,13 +95,15 @@ class RestaurantController extends Controller
         }
     }
 
-    public function show(Restaurant $restaurant)
+    public function show(Request $request, $id)
     {
         try {
             $apiKey = $request->header('API-KEY');
             if ($resp = ApiKeyController::check($apiKey)) {
                 return $resp;
             }
+
+            $restaurant = Restaurant::findOrFail($id);
 
             return response()->json([
                 'status'  => 'Sucesso',
@@ -125,7 +127,7 @@ class RestaurantController extends Controller
                 return $resp;
             }
 
-             $validator = Validator::make($request->all(), [
+            $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
                 'phone' => 'required|digits_between:8,20',
@@ -149,9 +151,7 @@ class RestaurantController extends Controller
                 ], 422);
             }
 
-           
             $restaurant = Restaurant::findOrFail($request->id);
-
             $restaurant->update($validator->validated());
 
             return response()->json([
@@ -169,14 +169,14 @@ class RestaurantController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try {
             $apiKey = $request->header('API-KEY');
             if ($resp = ApiKeyController::check($apiKey)) {
                 return $resp;
             }
-            
+
             $validator = Validator::make(['id' => $id], [
                 'id' => 'required|integer|exists:restaurants,id',
             ], [
@@ -198,7 +198,7 @@ class RestaurantController extends Controller
 
             return response()->json([
                 'status'  => 'Sucesso',
-                'message' => 'Restaurante Deletado com sucesso.'
+                'message' => 'Restaurante deletado com sucesso.'
             ], 200);
 
         } catch (Exception $e) {
@@ -209,6 +209,4 @@ class RestaurantController extends Controller
             ], 500);
         }
     }
-
-
 }

@@ -10,5 +10,6 @@ class Restaurant extends Model
         'name',
         'address',
         'phone',
+        'qtd_mesas'
     ];
 }
