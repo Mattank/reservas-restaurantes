@@ -18,5 +18,11 @@ Route::middleware('api.key')->group(function () {
         Route::get('/reservas/{id}', [ReservasController::class, 'show'])->name('reservas.show');
         Route::put('/reservas/{id}', [ReservasController::class, 'update'])->name('reservas.update');
         Route::delete('/reservas/{id}', [ReservasController::class, 'destroy'])->name('reservas.destroy');
+
+         Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+        Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     });
 });
