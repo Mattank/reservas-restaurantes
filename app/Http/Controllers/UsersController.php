@@ -12,6 +12,10 @@ class UserController extends Controller
     public function index(Request $request)
     {
         try {
+            $apiKey = $request->header('API-KEY');
+            if ($resp = ApiKeyController::check($apiKey)) {
+                return $resp;
+            }
             $perPage = $request->get('per_page', 10);
             $users = User::paginate($perPage);
 
@@ -41,6 +45,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
+            $apiKey = $request->header('API-KEY');
+            if ($resp = ApiKeyController::check($apiKey)) {
+                return $resp;
+            }
             $validator = Validator::make($request->all(), [
                 'name'     => 'required|string|max:255',
                 'email'    => 'required|email|unique:users,email',
@@ -86,6 +94,10 @@ class UserController extends Controller
     public function show($id)
     {
         try {
+            $apiKey = $request->header('API-KEY');
+            if ($resp = ApiKeyController::check($apiKey)) {
+                return $resp;
+            }
             $user = User::findOrFail($id);
 
             return response()->json([
@@ -106,6 +118,10 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $apiKey = $request->header('API-KEY');
+            if ($resp = ApiKeyController::check($apiKey)) {
+                return $resp;
+            }
             $validator = Validator::make($request->all(), [
                 'name'     => 'sometimes|string|max:255',
                 'email'    => "sometimes|email|unique:users,email,$id",
@@ -147,6 +163,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
+            $apiKey = $request->header('API-KEY');
+            if ($resp = ApiKeyController::check($apiKey)) {
+                return $resp;
+            }
             $user = User::findOrFail($id);
             $user->delete();
 
