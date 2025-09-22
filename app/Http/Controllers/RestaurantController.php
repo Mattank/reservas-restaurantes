@@ -16,9 +16,10 @@ class RestaurantController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
+
 
             $perPage = $request->get('per_page', 1);
             $restaurants = Restaurant::paginate($perPage);
@@ -50,9 +51,10 @@ class RestaurantController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
+
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
@@ -99,9 +101,10 @@ class RestaurantController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
+
 
             $restaurant = Restaurant::findOrFail($id);
 
@@ -123,9 +126,10 @@ class RestaurantController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
+
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
@@ -173,9 +177,10 @@ class RestaurantController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
+
 
             $validator = Validator::make(['id' => $id], [
                 'id' => 'required|integer|exists:restaurants,id',

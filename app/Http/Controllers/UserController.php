@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
             
@@ -47,9 +47,10 @@ class UserController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
+
             $validator = Validator::make($request->all(), [
                 'name'     => 'required|string|max:255',
                 'email'    => 'required|email|unique:users,email',
@@ -96,9 +97,10 @@ class UserController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
+
             $user = User::findOrFail($id);
 
             return response()->json([
@@ -120,9 +122,10 @@ class UserController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
+
             $validator = Validator::make($request->all(), [
                 'name'     => 'sometimes|string|max:255',
                 'email'    => "sometimes|email|unique:users,email,$id",
@@ -165,9 +168,10 @@ class UserController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
+
             $user = User::findOrFail($id);
             $user->delete();
 

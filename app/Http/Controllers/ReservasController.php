@@ -15,7 +15,7 @@ class ReservasController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
 
@@ -49,7 +49,7 @@ class ReservasController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
 
@@ -135,7 +135,7 @@ class ReservasController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
 
@@ -159,7 +159,7 @@ class ReservasController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
 
@@ -224,7 +224,7 @@ class ReservasController extends Controller
     {
         try {
             $apiKey = $request->header('API-KEY');
-            if ($resp = ApiKeyController::check($apiKey)) {
+            if ($resp = ApiKeyController::check($apiKey, $request)) {
                 return $resp;
             }
 
