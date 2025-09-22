@@ -77,14 +77,28 @@ class ReservasController extends Controller
 
             $dados = $validator->validated();
 
+            $reservaExiste = Reserva::where("data", $dados["data"])
+                ->where("hora", $dados["hora"])
+                ->where("restaurant_id", $dados["restaurant_id"])
+                ->where("user_id", $dados["user_id"])
+                ->count();
+
+            if ($reservaExiste > 0) {
+                 return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Dados cadastrais inválidos.',
+                    'errors'  => 'Este Usuário já possui reserva para este horario.',
+                ], 422);
+            }
+
             $reservasCount = Reserva::where("data", $dados["data"])
                 ->where("hora", $dados["hora"])
                 ->where("restaurant_id", $dados["restaurant_id"])
                 ->count();
 
-            $total_mesas = Restaurant::where('id', $dados["restaurant_id"])->value('total_mesas');
+            $qtd_mesas = Restaurant::where('id', $dados["restaurant_id"])->value('qtd_mesas');
 
-            if ($reservasCount >= $total_mesas) {
+            if ($reservasCount >= $qtd_mesas) {
                 return response()->json([
                     'status'  => 'error',
                     'message' => 'Dados cadastrais inválidos.',
@@ -178,9 +192,9 @@ class ReservasController extends Controller
                 ->where('restaurant_id', $dados['restaurant_id'])
                 ->count();
 
-            $total_mesas = Restaurant::where('id', $dados['restaurant_id'])->value('total_mesas');
+            $qtd_mesas = Restaurant::where('id', $dados['restaurant_id'])->value('qtd_mesas');
 
-            if ($reservasCount >= $total_mesas) {
+            if ($reservasCount >= $qtd_mesas) {
                 return response()->json([
                     'status'  => 'error',
                     'message' => 'Dados cadastrais inválidos.',

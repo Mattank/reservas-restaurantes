@@ -16,6 +16,7 @@ class UserController extends Controller
             if ($resp = ApiKeyController::check($apiKey)) {
                 return $resp;
             }
+            
             $perPage = $request->get('per_page', 10);
             $users = User::paginate($perPage);
 
@@ -73,7 +74,7 @@ class UserController extends Controller
             $user = User::create([
                 'name'     => $request->name,
                 'email'    => $request->email,
-                'password' => bcrypt($request->password),
+                'password' => $request->password,
             ]);
 
             return response()->json([
@@ -140,7 +141,7 @@ class UserController extends Controller
 
             $data = $validator->validated();
             if (isset($data['password'])) {
-                $data['password'] = bcrypt($data['password']);
+                $data['password'] = $data['password'];
             }
 
             $user->update($data);
